@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+  <title>Web Switch</title>
+</head>
+<body>
+  <h1>Web Switch</h1>
+  <p>RED<input type="checkbox" id="red"></p>
+  <p>GREEN<input type="checkbox" id="green"></p>
+  <p>YELLOW<input type="checkbox" id="yellow"></p>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.2.min.js"></script>
+  <script>
+    var socket = io();
+    $('#red').change(function () {
+      socket.emit('red', {value: (this.checked ? 1 : 0)});
+    });
+    $('#green').change(function () {
+      socket.emit('green', {value: (this.checked ? 1 : 0)});
+    });
+    $('#yellow').change(function () {
+      socket.emit('yellow', {value: (this.checked ? 1 : 0)});
+    });
+    socket.on('red', function (data) {
+      $('#red').prop("checked", data.value)
+    });
+    socket.on('green', function (data) {
+      $('#green').prop("checked", data.value)
+    });
+    socket.on('yellow', function (data) {
+      $('#yellow').prop("checked", data.value)
+    });
+  </script>
+</body>
+</html>
